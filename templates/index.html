@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PDF Intelligence Extractor</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h2>PDF Intelligence Extractor</h2>
+
+    <form action="/upload" method="post" enctype="multipart/form-data">
+      <input type="file" name="file" accept=".pdf" required>
+      <br>
+      <button type="submit">Upload & Extract</button>
+    </form>
+
+    {% if error %}
+      <p class="error">{{ error }}</p>
+    {% endif %}
+
+    {% if summary %}
+      <div class="section">
+        <h3>Summary</h3>
+        <pre>{{ summary }}</pre>
+      </div>
+    {% endif %}
+
+    {% if text %}
+      <div class="section">
+        <details>
+          <summary>Show Full Text</summary>
+          <pre>{{ text }}</pre>
+        </details>
+
+        <form action="/download-text" method="post">
+          <input type="hidden" name="text" value="{{ text | escape }}">
+          <button type="submit">Download Text (.txt)</button>
+        </form>
+      </div>
+    {% endif %}
+
+    {% if metadata %}
+      <div class="section">
+        <h3>Metadata</h3>
+        <ul>
+          {% for key, value in metadata.items() %}
+            <li><strong>{{ key }}:</strong> {{ value }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    {% if tables and tables|length > 0 %}
+      <div class="section">
+        <h3>Extracted Tables</h3>
+        {% for table in tables %}
+          <table>
+            {% for row in table %}
+              <tr>
+                {% for cell in row %}
+                  <td>{{ cell }}</td>
+                {% endfor %}
+              </tr>
+            {% endfor %}
+          </table>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</body>
+</html>
