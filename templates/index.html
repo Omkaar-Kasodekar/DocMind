@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>PDF Intelligence Extractor</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="/design/styles.css">
+  <link rel="icon" href="/design/favicon.ico" type="image/x-icon">
+
 </head>
 <body>
   <div class="container">
@@ -19,12 +21,13 @@
       <p class="error">{{ error }}</p>
     {% endif %}
 
-    {% if summary %}
-      <div class="section">
-        <h3>Summary</h3>
-        <pre>{{ summary }}</pre>
-      </div>
-    {% endif %}
+{% if summary %}
+  <div class="section">
+    <h3>Summary</h3>
+    <pre class="summary-box">{{ summary }}</pre>
+  </div>
+{% endif %}
+
 
     {% if text %}
       <div class="section">

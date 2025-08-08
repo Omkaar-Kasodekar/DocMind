@@ -4,6 +4,9 @@ from sumy.parsers.plaintext import PlaintextParser
 from sumy.nlp.tokenizers import Tokenizer
 from sumy.summarizers.lsa import LsaSummarizer
 
+import nltk
+nltk.download("punkt")
+
 def extract_text_and_metadata(pdf_path):
     doc = fitz.open(pdf_path)
     text = ""

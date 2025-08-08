@@ -4,6 +4,7 @@ from fastapi.templating import Jinja2Templates
 from io import BytesIO
 import os
 from extractor import extract_text_and_metadata, extract_tables, generate_summary
+from fastapi.staticfiles import StaticFiles
 
 import nltk
 try:
@@ -11,8 +12,8 @@ try:
 except LookupError:
     nltk.download("punkt")
 
-
 app = FastAPI()
+app.mount("/design", StaticFiles(directory="design"), name="design")
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 templates = Jinja2Templates(directory="templates")
